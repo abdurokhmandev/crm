@@ -856,6 +856,7 @@
 
     let modalCallback = null;
     function showModal(title, body, onConfirm) {
+        if (!API_BASE) return; // Login qilinmagan bo'lsa modal chiqmaydi
         document.getElementById('modal-title').textContent = title;
         document.getElementById('modal-body').textContent = body;
         modalCallback = onConfirm;
