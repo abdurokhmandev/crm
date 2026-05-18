@@ -72,56 +72,44 @@
         .btn-green:hover { background: rgba(16,185,129,0.3); }
         .btn-red    { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.25); font-size: 12px; padding: 5px 12px; border-radius: 7px; cursor: pointer; transition: all 0.15s; }
         .btn-red:hover { background: rgba(239,68,68,0.22); }
-        #toast { position: fixed; bottom: 28px; right: 28px; z-index: 9999; padding: 14px 22px; border-radius: 12px; font-weight: 600; font-size: 14px; box-shadow: 0 8px 30px rgba(0,0,0,0.4); transition: all 0.3s; pointer-events: none; }
-        #modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .video-card { background: rgba(21,28,44,0.7); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; transition: transform 0.2s, border-color 0.2s; }
         .video-card:hover { transform: translateY(-3px); border-color: rgba(99,102,241,0.4); }
-        #login-screen { position: fixed; inset: 0; background: #05070C; z-index: 100; display: flex; align-items: center; justify-content: center; }
+
+        /* === FIXED: Login, Modal, Toast — body flex kontekstidan TASHQARIDA === */
+        #login-screen {
+            position: fixed;
+            inset: 0;
+            background: #05070C;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 99999;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            transition: all 0.3s;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden text-sm">
-
-<!-- Login Screen -->
-<div id="login-screen">
-    <div class="glass rounded-2xl p-10 w-full max-w-sm mx-4 shadow-2xl text-center">
-        <div class="w-14 h-14 bg-indigo-500/15 rounded-2xl flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
-        </div>
-        <h1 class="text-2xl font-bold text-white mb-1">AI Videochi</h1>
-        <p class="text-gray-500 text-xs mb-7 uppercase tracking-widest font-mono">CRM Admin Panel</p>
-        <div class="space-y-3 text-left">
-            <div>
-                <label class="text-xs text-gray-400 mb-1.5 block">Server manzili (Railway URL)</label>
-                <input type="url" id="login-url" placeholder="https://videoai-production-xxx.up.railway.app" value="https://videoai-production-736c.up.railway.app">
-            </div>
-            <div>
-                <label class="text-xs text-gray-400 mb-1.5 block">Admin username</label>
-                <input type="text" id="login-user" placeholder="admin">
-            </div>
-            <div>
-                <label class="text-xs text-gray-400 mb-1.5 block">Parol</label>
-                <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-            </div>
-            <button onclick="doLogin()" class="btn-primary w-full mt-2">Kirish</button>
-            <p id="login-err" class="text-red-400 text-xs text-center hidden"></p>
-        </div>
-    </div>
-</div>
-
-<!-- Toast notification -->
-<div id="toast" class="hidden"></div>
-
-<!-- Confirm Modal -->
-<div id="modal-overlay" class="hidden">
-    <div class="glass rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
-        <h3 id="modal-title" class="text-xl font-bold text-white mb-3"></h3>
-        <p id="modal-body" class="text-gray-400 mb-6"></p>
-        <div class="flex gap-3 justify-end">
-            <button onclick="closeModal()" class="px-5 py-2 rounded-lg bg-gray-800 text-gray-300 hover:bg-gray-700 font-medium transition-colors">Bekor qilish</button>
-            <button id="modal-confirm-btn" class="btn-primary px-6 py-2">Tasdiqlash</button>
-        </div>
-    </div>
-</div>
 
 <!-- Sidebar -->
 <aside class="w-60 glass h-full flex flex-col border-r border-gray-800/60 z-10 shadow-2xl shrink-0">
@@ -433,6 +421,54 @@
 
     </div>
 </main>
+
+<!-- =====================================================
+     FIXED: Login, Modal, Toast — body FLEX dan TASHQARIDA
+     body { flex } kontekstidan chiqarildi, shuning uchun
+     position:fixed to'g'ri ishlaydi va z-index muammosi yo'q
+     ===================================================== -->
+
+<!-- Login Screen — OXIRDA, z-index: 200 -->
+<div id="login-screen">
+    <div class="glass rounded-2xl p-10 w-full max-w-sm mx-4 shadow-2xl text-center">
+        <div class="w-14 h-14 bg-indigo-500/15 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
+        </div>
+        <h1 class="text-2xl font-bold text-white mb-1">AI Videochi</h1>
+        <p class="text-gray-500 text-xs mb-7 uppercase tracking-widest font-mono">CRM Admin Panel</p>
+        <div class="space-y-3 text-left">
+            <div>
+                <label class="text-xs text-gray-400 mb-1.5 block">Server manzili (Railway URL)</label>
+                <input type="url" id="login-url" placeholder="https://videoai-production-xxx.up.railway.app" value="https://videoai-production-736c.up.railway.app">
+            </div>
+            <div>
+                <label class="text-xs text-gray-400 mb-1.5 block">Admin username</label>
+                <input type="text" id="login-user" placeholder="admin">
+            </div>
+            <div>
+                <label class="text-xs text-gray-400 mb-1.5 block">Parol</label>
+                <input type="password" id="login-pass" placeholder="••••••••">
+            </div>
+            <button onclick="doLogin()" class="btn-primary w-full mt-2">Kirish</button>
+            <p id="login-err" class="text-red-400 text-xs text-center hidden"></p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal — Login DAN KEYIN, z-index: 9999 -->
+<div id="modal-overlay" class="hidden">
+    <div class="glass rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+        <h3 id="modal-title" class="text-xl font-bold text-white mb-3"></h3>
+        <p id="modal-body" class="text-gray-400 mb-6"></p>
+        <div class="flex gap-3 justify-end">
+            <button onclick="closeModal()" class="px-5 py-2 rounded-lg bg-gray-800 text-gray-300 hover:bg-gray-700 font-medium transition-colors">Bekor qilish</button>
+            <button id="modal-confirm-btn" class="btn-primary px-6 py-2">Tasdiqlash</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast — eng yuqorida, z-index: 99999 -->
+<div id="toast" class="hidden"></div>
 
 <script>
     let API_BASE = '';
@@ -791,14 +827,12 @@
         }
     }
 
-    // Broadcast live preview
     document.getElementById('broadcast-text').addEventListener('input', function() {
         const prev = document.getElementById('broadcast-preview');
         const val = this.value.trim();
         prev.innerHTML = val ? val.replace(/\n/g, '<br>') : '<span class="text-gray-600">Matn kiritilmagan...</span>';
     });
 
-    // Helpers
     function statusBadge(s) {
         if (!s) return '<span class="badge badge-gray">—</span>';
         const map = { confirmed:'badge-green', done:'badge-green', pending:'badge-amber', processing:'badge-blue', cancelled:'badge-red', failed:'badge-red' };
@@ -831,7 +865,6 @@
     function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); modalCallback = null; }
     document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target === document.getElementById('modal-overlay')) closeModal(); });
 
-    // Enter on login
     document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key === 'Enter') doLogin(); });
 </script>
 </body>
