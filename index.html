@@ -512,11 +512,9 @@
     }
 
     function doLogout() {
-        if (confirm("Tizimdan chiqishni xohlaysizmi?")) {
-            API_BASE = ''; AUTH_HEADER = '';
-            document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('login-pass').value = '';
-        }
+        API_BASE = ''; AUTH_HEADER = '';
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('login-pass').value = '';
     }
 
     function switchTab(tabId, btn) {
